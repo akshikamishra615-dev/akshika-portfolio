@@ -44,7 +44,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    setMobileMenuOpen(false);
+    requestAnimationFrame(() => {
+      setMobileMenuOpen(false);
+    });
   };
 
   return (
