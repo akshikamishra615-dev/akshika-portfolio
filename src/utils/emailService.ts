@@ -8,9 +8,9 @@ export interface EmailFormData {
 }
 
 export async function sendContactEmail(data: EmailFormData): Promise<{ success: boolean; error?: string }> {
-  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_default';
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_default';
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'public_key_default';
+  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_lkbfw2f';
+  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_yutnykj';
+  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '9ShEJ-QVTkk2sON-a';
 
   const templateParams = {
     name: data.name,
