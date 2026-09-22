@@ -30,9 +30,26 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
     { label: 'Contact', href: '#contact' },
   ];
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    const targetId = href.replace('#', '');
+    
+    if (targetId) {
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        e.preventDefault();
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    setMobileMenuOpen(false);
+  };
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'bg-[#FAFAFA]/90 dark:bg-[#0A0A0A]/90 backdrop-blur-md py-3 border-b border-[#E5E5DF] dark:border-neutral-800 shadow-xs'
           : 'bg-transparent py-6'
@@ -42,6 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
         {/* Left: Brand Wordmark */}
         <a
           href="#"
+          onClick={(e) => handleNavClick(e, '#')}
           className="flex items-center gap-2.5 group focus:outline-none rounded-lg p-1"
         >
           <div className="w-9 h-9 rounded-xl bg-[#111111] dark:bg-white text-white dark:text-[#111111] flex items-center justify-center font-display font-bold text-lg group-hover:bg-[#2563EB] dark:group-hover:bg-[#3B82F6] dark:group-hover:text-white transition-colors duration-200 shadow-xs">
@@ -65,6 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
               <a
                 key={link.label}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className={`px-4 py-1.5 text-xs font-medium rounded-full transition-all duration-200 ${
                   isActive
                     ? 'bg-[#111111] dark:bg-white text-white dark:text-[#111111] shadow-xs'
@@ -87,6 +106,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
 
           <a
             href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
             className="px-5 py-2.5 text-xs font-medium bg-[#111111] dark:bg-blue-600 text-white rounded-full hover:bg-[#2563EB] dark:hover:bg-blue-500 transition-colors duration-200 flex items-center gap-1.5 shadow-xs"
           >
             <span>Let's Talk</span>
@@ -95,13 +115,13 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
         </div>
 
         {/* Mobile Controls (Theme Toggle + Hamburger) */}
-        <div className="flex sm:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-2">
           <ThemeToggle />
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
-            className="p-2 text-[#111111] dark:text-white hover:bg-[#F4F4F0] dark:hover:bg-neutral-800 rounded-lg transition-colors border border-[#E5E5DF] dark:border-neutral-800"
+            className="p-2 text-[#111111] dark:text-white hover:bg-[#F4F4F0] dark:hover:bg-neutral-800 rounded-lg transition-colors border border-[#E5E5DF] dark:border-neutral-800 cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -130,8 +150,8 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
                 <a
                   key={link.label}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-lg font-display font-medium text-[#111111] dark:text-white hover:text-[#2563EB] dark:hover:text-blue-400 py-1 transition-colors flex items-center justify-between"
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-lg font-display font-medium text-[#111111] dark:text-white hover:text-[#2563EB] dark:hover:text-blue-400 py-1 transition-colors flex items-center justify-between cursor-pointer select-none touch-manipulation"
                 >
                   <span>{link.label}</span>
                   <ArrowUpRight className="w-4 h-4 text-[#666660] dark:text-neutral-400" />
@@ -141,8 +161,8 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection }) => {
               <div className="pt-4 mt-2 border-t border-[#E5E5DF] dark:border-neutral-800 flex flex-col gap-2">
                 <a
                   href="#contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-3 bg-[#111111] dark:bg-blue-600 text-white font-medium rounded-xl text-sm"
+                  onClick={(e) => handleNavClick(e, '#contact')}
+                  className="w-full text-center py-3 bg-[#111111] dark:bg-blue-600 text-white font-medium rounded-xl text-sm cursor-pointer select-none touch-manipulation"
                 >
                   Let's Talk →
                 </a>
